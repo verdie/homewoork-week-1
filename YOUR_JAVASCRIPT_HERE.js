@@ -1,6 +1,7 @@
 
 // Write your JS here
 const hero = {
+    avatar: 'img/hero-image.png',
     name: "MYBESTHERO",
     heroic: true,
     inventory: [],
@@ -56,6 +57,7 @@ bag.onclick = function(){
 
 function displayStats (hero) {
     const myCurrentStat = document.getElementById("my-current-stat");
+    myCurrentStat.innerHTML = null;
     const name = document.createElement('h3');
     name.innerHTML = "My hero name : "+ hero.name;
     const health = document.createElement('h4');
@@ -64,8 +66,11 @@ function displayStats (hero) {
     weapon.innerHTML = "My weapon : " + hero.weapon.type;
     const weaponDamage = document.createElement('h4')
     weaponDamage.innerHTML = "My weapon damage : " + hero.weapon.damage;
-    myCurrentStat.innerHTML = null;
+    const img = document.createElement('img');
+    img.src = hero.avatar;
+    img.classList.add('hero-image');
     
+    myCurrentStat.appendChild(img)
     myCurrentStat.appendChild(name)
     myCurrentStat.appendChild(health)
     myCurrentStat.appendChild(weapon)
@@ -95,3 +100,60 @@ function displayForm(name){
     }
 }
 displayStats(hero)
+
+const enemyObj= {
+    avatar: 'img/enemy-image.png',
+    name: "MYWORSTENEMY",
+    heroic: false,
+    inventory: [],
+    health: 8,
+    weapon:{
+        type: "axe",
+        damage: 1,
+    }
+}
+
+function addEnemy (enemyObj){
+    const myEnemyList = document.getElementById('my-enemy-list')
+    const enemy = document.createElement('div');
+    const enemyName = document.createElement('h3');
+    enemyName.innerHTML = "My enemy name : " + enemyObj.name;
+    const enemyHealth = document.createElement('h4');
+    enemyHealth.innerHTML = "Health : " + enemyObj.health;
+    const enemyWeapon = document.createElement('h4');
+    enemyWeapon.innerHTML = "My weapon : " + enemyObj.weapon.type;
+    const img = document.createElement('img');
+    img.src = enemyObj.avatar;
+    img.classList.add('enemy-image');
+    enemy.appendChild(img)
+    enemy.appendChild(enemyName);
+    enemy.appendChild(enemyHealth);
+    enemy.appendChild(enemyWeapon);
+    myEnemyList.appendChild(enemy);
+    enemy.onclick = function(){
+        enemyObj.health = enemyObj.health - hero.weapon.damage;
+        enemyHealth.innerHTML = 'Health : ' + enemyObj.health;
+        if(enemyObj.health < 0){
+            alert ('You won!');
+            enemy.parentNode.removeChild(enemy);
+        }
+        
+    }
+    console.log(enemy)
+}
+
+addEnemy(enemyObj);
+
+
+
+
+/*
+1. Sozdat function dobavleniya vraga
+2. vnutri ona doljna sozdavat DOM block
+3. v etot blok nuzno sozdavat drugoi DOM block kotorii butet soderzat title - Enemy
+i eshe odin block kotorii budet soderzat HP vraga
+4. pri nazatii na block iz punkta 2 HP etogo vraga dolzno umenshatsa
+5. kogda hp vraga stanovitsa 0 pokazivat alert s tekstom "you won"
+
+
+*/
